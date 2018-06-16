@@ -9,15 +9,16 @@ executables = [Executable('Main.py',
 
 zip_include_packages = ['collections', 'encodings', 'importlib', 'PyQt5']
 
-include_files = ['data',
+include_files = ['Аlgorithms',
+                 'Thematic_dictionary',
+                 'GUI',
                  'README.txt',
-                 'documenttexthd.ico',
                  ]
 
 options = {
     'build_exe': {
         'zip_include_packages': zip_include_packages,
-        'build_exe': 'build_windows',
+        'build_exe': 'Extracting_keywords',
         'include_files': include_files,
     }
 }
