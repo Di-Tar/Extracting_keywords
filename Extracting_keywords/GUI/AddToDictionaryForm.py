@@ -27,9 +27,11 @@ class AddToDictionaryForm(QWidget):
 
         list_keywords2 = QListWidget()
         list_keywords2.resize(300, 120)
-
+        
         list_keywords2.addItem("открытое татистическое исследование");
         list_keywords2.addItem("статистическое исследование");
+
+
 
         grid = QGridLayout()
         grid.setSpacing(10)
@@ -40,6 +42,7 @@ class AddToDictionaryForm(QWidget):
         grid.addWidget(list_keywords2, 2, 1)
         grid.addWidget(but_add_dictionary, 3, 0)
         grid.addWidget(but_exit, 3, 1)
+
 
         self.setLayout(grid)
 

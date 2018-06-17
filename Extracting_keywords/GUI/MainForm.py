@@ -1,30 +1,30 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+# Основное окно ПО. Отрисовывет основную форму, взаимодействует с алгоритмами
+# и выводит результат.
+
 from PyQt5.QtWidgets import QMessageBox, QPushButton, QWidget, QLabel, \
-    QComboBox, QLineEdit, QGridLayout, QListWidget, QFileDialog, QSpinBox
+    QComboBox, QGridLayout, QListWidget, QFileDialog, QSpinBox
 
 from GUI.AlgorithmsEstimationForm import AlgorithmsEstimationForm
-from TextIO import IOInterface
+from TextIO import TextIO
+from Аlgorithms.DefinitionCharacteristics import DefinitCharact
 
 
 class MainForm(QWidget):
 
-    def getx(self):
-        return self.__addwin
+    def getx(self): return self.__addwin
 
-    def setx(self, value):
-        self.__addwin = value
+    def setx(self, value): self.__addwin = value
 
-    def delx(self):
-        del self.__addwin
+    def delx(self): del self.__addwin
 
     addwin = property(getx, setx, delx, "Свойство 'addwin'.")
 
     def __init__(self):
         super(MainForm, self).__init__()
         self.initUI()
-        # self.file
 
     def initUI(self):
 
@@ -32,6 +32,7 @@ class MainForm(QWidget):
         addtextdocument.clicked.connect(self.ATDDialog)
 
         but_subject_area = QPushButton("Добавить предметную область")
+
 
         self.but_extracting_keywords = QPushButton("Извлечь ключевые слова")
         self.but_extracting_keywords.setEnabled(False)
@@ -47,6 +48,7 @@ class MainForm(QWidget):
         but_algorithms_estimation.setEnabled(False)
         but_algorithms_estimation.clicked.connect(self.RunEstimation)
 
+
         self.address = QLabel("Необходимо выборать файл с расширением '.txt'")
         leb1 = QLabel("Предметная область")
         leb2 = QLabel("Размер выборки ключевых слов")
@@ -59,12 +61,14 @@ class MainForm(QWidget):
         self.sample_size.setEnabled(False)
         self.sample_size.valueChanged.connect(self.CheckExtract)
 
+
         keywords_line = QListWidget()
+
 
         grid = QGridLayout()
         grid.setSpacing(10)
         grid.addWidget(addtextdocument, 1, 0)
-        grid.addWidget(self.address, 1, 1, 1, 1, )
+        grid.addWidget(self.address, 1, 1, 1, 1,)
         grid.addWidget(leb1, 2, 0)
         grid.addWidget(self.comb_subject_area, 2, 1)
         grid.addWidget(but_subject_area, 2, 2)
@@ -83,25 +87,28 @@ class MainForm(QWidget):
         self.setWindowTitle('Извлечение ключевых слов')
         self.show()
 
+
     def ATDDialog(self):
-        file = QFileDialog.getOpenFileName(self, 'Выберите документ', '', 'Text Files (*.txt)')
+        file = QFileDialog.getOpenFileName(self, 'Выберите документ', '','Text Files (*.txt)')
         self.address.setText('Загруженный файл: ' + file[0])
         self.address.adjustSize()
-        self.base_text = IOInterface(file[0])
-        self.base_text.InputText()
+        self.base_text = TextIO(file[0])
+        self.base_text.ReadTeaxt()
         self.sample_size.setEnabled(True)
 
     def RunEstimation(self):
         self.addwin = AlgorithmsEstimationForm()
 
+
     def CheckExtract(self):
         if self.sample_size.value() != 0:
             self.but_extracting_keywords.setEnabled(True)
-        else:
-            self.but_extracting_keywords.setEnabled(False)
+        else: self.but_extracting_keywords.setEnabled(False)
+
 
     def RunExtractingKey(self):
-        pass
+        self.keyword = DefinitCharact(self.base_text)
+
 
     def closeEvent(self, event):
         reply = QMessageBox.question(self, 'Выход', 'Вы точно хотите выйти?',
