@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QMessageBox, QPushButton, QWidget, QLabel, \
 
 from GUI.AlgorithmsEstimationForm import AlgorithmsEstimationForm
 from TextIO import TextIO
-from Аlgorithms.DefinitionCharacteristics import DefinitCharact
+from Аlgorithms.PreliminaryProcessing import PreliminaryProcessing
 
 
 class MainForm(QWidget):
@@ -62,7 +62,7 @@ class MainForm(QWidget):
         self.sample_size.valueChanged.connect(self.CheckExtract)
 
 
-        keywords_line = QListWidget()
+        self.keywords_line = QListWidget()
 
 
         grid = QGridLayout()
@@ -75,7 +75,7 @@ class MainForm(QWidget):
         grid.addWidget(leb2, 3, 0)
         grid.addWidget(self.sample_size, 3, 1)
         grid.addWidget(results_extraction, 4, 0)
-        grid.addWidget(keywords_line, 5, 0, 5, 2)
+        grid.addWidget(self.keywords_line, 5, 0, 5, 2)
         grid.addWidget(self.but_extracting_keywords, 5, 2)
         grid.addWidget(but_add_dictionary, 6, 2)
         grid.addWidget(but_save, 10, 0)
@@ -92,12 +92,13 @@ class MainForm(QWidget):
         file = QFileDialog.getOpenFileName(self, 'Выберите документ', '','Text Files (*.txt)')
         self.address.setText('Загруженный файл: ' + file[0])
         self.address.adjustSize()
-        self.base_text = TextIO(file[0])
-        self.base_text.ReadTeaxt()
+        IOport = TextIO()
+        self.base_text = IOport.ReadTeaxt(file[0])
         self.sample_size.setEnabled(True)
 
+
     def RunEstimation(self):
-        self.addwin = AlgorithmsEstimationForm()
+       AlgorithmsEstimationForm()
 
 
     def CheckExtract(self):
@@ -107,7 +108,11 @@ class MainForm(QWidget):
 
 
     def RunExtractingKey(self):
-        self.keyword = DefinitCharact(self.base_text)
+        self.keyword = PreliminaryProcessing(self.base_text)
+
+        for n in self.keyword.fin_dict_Cand:
+            self.keywords_line.addItem(n)
+
 
 
     def closeEvent(self, event):

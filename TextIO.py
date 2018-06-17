@@ -20,13 +20,19 @@ class TextIO:
             else:
                 self.InputText += part + ' '
 
-        print(self.InputText)
+        return self.InputText
 
     def WriteTeaxt(self, text, addresOut):
         self.addresOut = addresOut
-        with codecs.open(addresOut, 'w', "utf_8_sig") as out_file:
-            json.dump(text, out_file, ensure_ascii=False, indent=4)
-            # file.write(text)
+        with codecs.open(self.addresOut, 'w', "utf_8_sig") as OutFile:
+            json.dump(text, OutFile, ensure_ascii=False, indent = 4, sort_keys = True)
+
+    def ReadJson(self, addresIn):
+        self.addresIn = addresIn
+        with codecs.open(self.addresIn, 'r', "utf_8_sig") as InFile:
+            InputText = json.load(InFile, )
+
+        return InputText
 
 # Testing
 

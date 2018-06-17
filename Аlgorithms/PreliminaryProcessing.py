@@ -2,23 +2,25 @@
 import re
 
 # Предватительная обработка данных и выделение кандидатов
-import numpy as np
 import pymorphy2
 
 from TextIO import TextIO
 
 
-class DefinitCharact:
+class PreliminaryProcessing:
 
     def __init__(self, text):
         self.text = text
-        self.DefinitCharact()
+        self.PrelProc()
 
-    def DefinitCharact(self):
+    def PrelProc(self):
         self.Tokenization()
         self.Lemma_POS_Tag()
-        base_text.WriteTeaxt(self.t_text, 'Text_text.json')
         self.Keywords_Candidate()
+        IOport = TextIO()
+        IOport.WriteTeaxt(self.fin_dict_Cand, 'Text_dis_alg.json')
+
+
 
     # Токенизация по словам и предложениям
     def Tokenization(self):
@@ -54,8 +56,6 @@ class DefinitCharact:
 
             self.t_text.append(t_sentence)
 
-        print(self.t_text)
-
     def Lemma_POS_Tag(self):
         self.morph = pymorphy2.MorphAnalyzer()
         t = self.morph.parse(self.t_text[0][0][7])[0].tag
@@ -70,7 +70,6 @@ class DefinitCharact:
                         self.t_text[sentence][part_sentence][words] = \
                             [self.morph.parse(self.t_text[sentence][part_sentence][words])[0].normal_form, \
                              self.morph.parse(self.t_text[sentence][part_sentence][words])[0].tag.POS]
-        print(self.t_text)
 
     def Keywords_Candidate(self):
         self.t_nsw_text = []
@@ -93,13 +92,9 @@ class DefinitCharact:
                 dict_Cand[n[0]] = [n[1], 1]
 
         for n in dict_Cand:
-            if dict_Cand[n][1] > 2:
+            if dict_Cand[n][1] > 2 and len(n) > 2:
                 self.fin_dict_Cand[n] = [dict_Cand[n][0], dict_Cand[n][1]]
-
-        print(self.fin_dict_Cand)
-        print(len(self.fin_dict_Cand))
 
 
 # base_text = TextIO()
-# base_text.ReadTeaxt('tren_text_1.txt')
-# f = DefinitCharact(base_text.InputText)
+# f = PreliminaryProcessing(base_text.ReadTeaxt('tren_text_1.txt'))
