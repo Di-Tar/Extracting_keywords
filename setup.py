@@ -12,6 +12,7 @@ zip_include_packages = ['collections', 'encodings', 'importlib', 'PyQt5']
 include_files = ['Аlgorithms',
                  'Thematic_dictionary',
                  'GUI',
+                 'TextIO.py',
                  'README.txt',
                  ]
 

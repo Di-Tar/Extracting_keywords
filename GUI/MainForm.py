@@ -1,11 +1,15 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+# Основное окно ПО. Отрисовывет основную форму, взаимодействует с алгоритмами
+# и выводит результат.
+
 from PyQt5.QtWidgets import QMessageBox, QPushButton, QWidget, QLabel, \
-    QComboBox, QLineEdit, QGridLayout, QListWidget, QFileDialog, QSpinBox
+    QComboBox, QGridLayout, QListWidget, QFileDialog, QSpinBox
 
 from GUI.AlgorithmsEstimationForm import AlgorithmsEstimationForm
-from IOInterface import IOInterface
+from TextIO import TextIO
+from Аlgorithms.DefinitionCharacteristics import DefinitCharact
 
 
 class MainForm(QWidget):
@@ -21,7 +25,6 @@ class MainForm(QWidget):
     def __init__(self):
         super(MainForm, self).__init__()
         self.initUI()
-        # self.file
 
     def initUI(self):
 
@@ -88,9 +91,9 @@ class MainForm(QWidget):
     def ATDDialog(self):
         file = QFileDialog.getOpenFileName(self, 'Выберите документ', '','Text Files (*.txt)')
         self.address.setText('Загруженный файл: ' + file[0])
-        # self.address.adjustSize()
-        self.base_text = IOInterface(file[0])
-        self.base_text.InputText()
+        self.address.adjustSize()
+        self.base_text = TextIO(file[0])
+        self.base_text.ReadTeaxt()
         self.sample_size.setEnabled(True)
 
     def RunEstimation(self):
@@ -104,7 +107,8 @@ class MainForm(QWidget):
 
 
     def RunExtractingKey(self):
-        pass
+        self.keyword = DefinitCharact(self.base_text)
+
 
     def closeEvent(self, event):
         reply = QMessageBox.question(self, 'Выход', 'Вы точно хотите выйти?',
