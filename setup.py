@@ -23,7 +23,7 @@ options = {
 }
 
 setup(name='Extracting_keywords',
-      version='0.0.1',
+      version='0.1.0',
       description='Extract keywords from txt files.',
       executables=executables,
       options=options
