@@ -23,7 +23,8 @@ class DefinitionCharacteristics:
             if key_w in self.candidate_words:
                 (self.candidate_words[key_w][2]) = 1 / self.candidate_words[key_w][1]
 
-        self.candidate_words
+        print(self.candidate_words)
+        print('Fin Calc_Meas_Keywords')
 
     def UppdateOccurrence(self):
         pass

@@ -18,7 +18,7 @@ class PreliminaryProcessing:
         self.Lemma_POS_Tag()
         self.Keywords_Candidate()
         IOport = TextIO()
-        IOport.WriteTeaxt(self.fin_dict_Cand, 'Text_dis_alg.json')
+        IOport.WriteJson(self.fin_dict_Cand, 'Text_dis_alg.json')
 
 
 
@@ -46,7 +46,7 @@ class PreliminaryProcessing:
                 i.strip(' ')
             t_sentence = []
             for num_part_sentence in range(len(sentence)):
-                part_sentence = re.split('[^A-Я,а-я,\d,\-]', sentence[num_part_sentence])
+                part_sentence = re.split('[^A-Я,а-я,0-9,\-]', sentence[num_part_sentence])
                 t_part_sentence = []
                 for num_words in range(len(part_sentence)):
                     if part_sentence[num_words] != '':
@@ -55,6 +55,9 @@ class PreliminaryProcessing:
                 t_sentence.append(t_part_sentence)
 
             self.t_text.append(t_sentence)
+
+        print(self.t_text)
+        print('Fin Tokenization')
 
     def Lemma_POS_Tag(self):
         self.morph = pymorphy2.MorphAnalyzer()
@@ -71,13 +74,16 @@ class PreliminaryProcessing:
                             [self.morph.parse(self.t_text[sentence][part_sentence][words])[0].normal_form, \
                              self.morph.parse(self.t_text[sentence][part_sentence][words])[0].tag.POS]
 
+        print(self.t_text)
+        print('Fin Lemma_POS_Tag')
+
     def Keywords_Candidate(self):
         self.t_nsw_text = []
         for sentence in range(len(self.t_text)):
             for part_sentence in range(len(self.t_text[sentence])):
                 for words in range(len(self.t_text[sentence][part_sentence])):
                     try:
-                        if self.t_text[sentence][part_sentence][words][1] in ['LATN']:
+                        if self.t_text[sentence][part_sentence][words][1] == 'LATN':
                             self.t_nsw_text.append(self.t_text[sentence][part_sentence][words])
                     except ValueError:
                         if self.t_text[sentence][part_sentence][words][1] in ['NOUN', 'ADJF', 'ADVB', 'INFN']:
@@ -95,6 +101,8 @@ class PreliminaryProcessing:
             if dict_Cand[n][1] > 2 and len(n) > 2:
                 self.fin_dict_Cand[n] = [dict_Cand[n][0], dict_Cand[n][1]]
 
+        print(self.fin_dict_Cand)
+        print('Fin Keywords_Candidate')
 
 # base_text = TextIO()
 # f = PreliminaryProcessing(base_text.ReadTeaxt('tren_text_1.txt'))

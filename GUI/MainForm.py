@@ -9,6 +9,8 @@ from PyQt5.QtWidgets import QMessageBox, QPushButton, QWidget, QLabel, \
 
 from GUI.AlgorithmsEstimationForm import AlgorithmsEstimationForm
 from TextIO import TextIO
+from Аlgorithms.DefinitionCharacteristics import DefinitionCharacteristics
+from Аlgorithms.Postprocessing import Postprocessing
 from Аlgorithms.PreliminaryProcessing import PreliminaryProcessing
 
 
@@ -32,6 +34,7 @@ class MainForm(QWidget):
         addtextdocument.clicked.connect(self.ATDDialog)
 
         but_subject_area = QPushButton("Добавить предметную область")
+        but_subject_area.setEnabled(False)
 
 
         self.but_extracting_keywords = QPushButton("Извлечь ключевые слова")
@@ -44,9 +47,9 @@ class MainForm(QWidget):
         but_save = QPushButton("Сохранить результат")
         but_save.setEnabled(False)
 
-        but_algorithms_estimation = QPushButton("Оценка алгоритма")
-        but_algorithms_estimation.setEnabled(False)
-        but_algorithms_estimation.clicked.connect(self.RunEstimation)
+        self.but_algorithms_estimation = QPushButton("Оценка алгоритма")
+        # self.but_algorithms_estimation.setEnabled(False)
+        self.but_algorithms_estimation.clicked.connect(self.RunEstimation)
 
 
         self.address = QLabel("Необходимо выборать файл с расширением '.txt'")
@@ -56,6 +59,8 @@ class MainForm(QWidget):
 
         self.comb_subject_area = QComboBox(self)
         self.comb_subject_area.setEditable(False)
+        self.comb_subject_area.addItem("50.41.17 Системное программное обеспечение")
+
 
         self.sample_size = QSpinBox(self, minimum=0, maximum=20)
         self.sample_size.setEnabled(False)
@@ -79,7 +84,7 @@ class MainForm(QWidget):
         grid.addWidget(self.but_extracting_keywords, 5, 2)
         grid.addWidget(but_add_dictionary, 6, 2)
         grid.addWidget(but_save, 10, 0)
-        grid.addWidget(but_algorithms_estimation, 10, 1)
+        grid.addWidget(self.but_algorithms_estimation, 10, 1)
 
         self.setLayout(grid)
 
@@ -98,7 +103,8 @@ class MainForm(QWidget):
 
 
     def RunEstimation(self):
-       AlgorithmsEstimationForm()
+        self.addwin = AlgorithmsEstimationForm()
+
 
 
     def CheckExtract(self):
@@ -108,10 +114,20 @@ class MainForm(QWidget):
 
 
     def RunExtractingKey(self):
+        self.but_extracting_keywords.setEnabled(False)
+        self.keywords_line.clear()
         self.keyword = PreliminaryProcessing(self.base_text)
+        print('End PreliminaryProcessing')
+        self.keyword = DefinitionCharacteristics(self.keyword.fin_dict_Cand)
+        print('End DefinitionCharacteristics')
+        self.keyword = Postprocessing(self.keyword.candidate_words, int(self.sample_size.value()))
+        print('End Postprocessing')
 
-        for n in self.keyword.fin_dict_Cand:
+        for n in self.keyword.fin_KeyWords:
             self.keywords_line.addItem(n)
+
+        self.but_extracting_keywords.setEnabled(True)
+        self.but_algorithms_estimation.setEnabled(True)
 
 
 
