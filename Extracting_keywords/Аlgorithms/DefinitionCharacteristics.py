@@ -1,4 +1,4 @@
-from TextIO import TextIO
+from Thematic_dictionary.TextIO import TextIO
 from Thematic_dictionary.TermDictionary import TermDictionary
 
 

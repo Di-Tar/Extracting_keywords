@@ -4,7 +4,7 @@ import re
 # Предватительная обработка данных и выделение кандидатов
 import pymorphy2
 
-from TextIO import TextIO
+from Thematic_dictionary.TextIO import TextIO
 
 
 class PreliminaryProcessing:

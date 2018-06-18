@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QMessageBox, QPushButton, QWidget, QLabel, \
     QComboBox, QGridLayout, QListWidget, QFileDialog, QSpinBox
 
 from GUI.AlgorithmsEstimationForm import AlgorithmsEstimationForm
-from TextIO import TextIO
+from Thematic_dictionary.TextIO import TextIO
 from Аlgorithms.DefinitionCharacteristics import DefinitionCharacteristics
 from Аlgorithms.Postprocessing import Postprocessing
 from Аlgorithms.PreliminaryProcessing import PreliminaryProcessing
