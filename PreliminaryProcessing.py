@@ -4,16 +4,19 @@ import re
 # Предватительная обработка данных и выделение кандидатов
 import pymorphy2
 
-from Thematic_dictionary.TextIO import TextIO
+from TextIO import TextIO
 
 
 class PreliminaryProcessing:
 
-    def __init__(self, text):
-        self.text = text
+    def __init__(self, file):
+        self.file = file
         self.PrelProc()
 
     def PrelProc(self):
+        print('1')
+        self.IOport = TextIO()
+        self.text = self.IOport.ReadTeaxt(self.file)
         self.Tokenization()
         self.Lemma_POS_Tag()
         self.Keywords_Candidate()
@@ -24,11 +27,16 @@ class PreliminaryProcessing:
 
     # Токенизация по словам и предложениям
     def Tokenization(self):
-        test1 = re.split(r'[\.,\?,\!,\.\.\.] ([А-Я])', self.text)
+        print('2')
+        if self.IOport.correct_encoding != 'windows-1251':
+            test1 = re.split(r'[\.,\?,\!,\.\.\.] ([А-Я])', self.text)
+        else:
+            test1 = self.text
 
+        print('3')
         for i in test1:
             i.strip(' ')
-
+        print('2')
         text2 = []
         i = 0
         while i < len(test1):

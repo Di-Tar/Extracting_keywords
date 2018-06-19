@@ -7,11 +7,11 @@
 from PyQt5.QtWidgets import QMessageBox, QPushButton, QWidget, QLabel, \
     QComboBox, QGridLayout, QListWidget, QFileDialog, QSpinBox
 
-from GUI.AlgorithmsEstimationForm import AlgorithmsEstimationForm
-from Thematic_dictionary.TextIO import TextIO
-from Аlgorithms.DefinitionCharacteristics import DefinitionCharacteristics
-from Аlgorithms.Postprocessing import Postprocessing
-from Аlgorithms.PreliminaryProcessing import PreliminaryProcessing
+from AlgorithmsEstimationForm import AlgorithmsEstimationForm
+from TextIO import TextIO
+from DefinitionCharacteristics import DefinitionCharacteristics
+from Postprocessing import Postprocessing
+from PreliminaryProcessing import PreliminaryProcessing
 
 
 class MainForm(QWidget):
@@ -94,12 +94,12 @@ class MainForm(QWidget):
 
 
     def ATDDialog(self):
-        file = QFileDialog.getOpenFileName(self, 'Выберите документ', '','Text Files (*.txt)')
-        self.address.setText('Загруженный файл: ' + file[0])
+        self.address_text = QFileDialog.getOpenFileName(self, 'Выберите документ', '','Text Files (*.txt)')
+        self.address.setText('Загруженный файл: ' + self.address_text[0])
         self.address.adjustSize()
-        IOport = TextIO()
-        self.base_text = IOport.ReadTeaxt(file[0])
+
         self.sample_size.setEnabled(True)
+
 
 
     def RunEstimation(self):
@@ -116,7 +116,7 @@ class MainForm(QWidget):
     def RunExtractingKey(self):
         self.but_extracting_keywords.setEnabled(False)
         self.keywords_line.clear()
-        self.keyword = PreliminaryProcessing(self.base_text)
+        self.keyword = PreliminaryProcessing(self.address_text[0])
         print('End PreliminaryProcessing')
         self.keyword = DefinitionCharacteristics(self.keyword.fin_dict_Cand)
         print('End DefinitionCharacteristics')

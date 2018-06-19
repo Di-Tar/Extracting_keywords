@@ -1,5 +1,5 @@
-from Thematic_dictionary.TextIO import TextIO
-from Аlgorithms.DefinitionCharacteristics import DefinitionCharacteristics
+from TextIO import TextIO
+from DefinitionCharacteristics import DefinitionCharacteristics
 
 
 class Postprocessing:
@@ -63,17 +63,18 @@ class Postprocessing:
 
 
         KeyWords.sort(key=lambda i: i[1], reverse=1)
-
-        i = 0
-        self.fin_KeyWords = []
-        while i < self.size:
-            self.fin_KeyWords.append(KeyWords[i][0])
-            i += 1
-
+        try:
+            i = 0
+            self.fin_KeyWords = []
+            while i < self.size:
+                self.fin_KeyWords.append(KeyWords[i][0])
+                i += 1
+        except IndexError:
+            print('IndexError')
         print(self.fin_KeyWords)
 
         print('Fin KSampCalculare')
 
-base_text = TextIO()
-f = DefinitionCharacteristics(base_text.ReadJson('Text_dis_alg.json'))
-p = Postprocessing(f.candidate_words, 10)
+# base_text = TextIO()
+# f = DefinitionCharacteristics(base_text.ReadJson('Text_dis_alg.json'))
+# p = Postprocessing(f.candidate_words, 10)

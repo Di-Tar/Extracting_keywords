@@ -9,15 +9,24 @@ executables = [Executable('Main.py',
 
 zip_include_packages = ['collections', 'encodings', 'importlib', 'PyQt5']
 
-include_files = ['data',
-                 'README.txt',
-                 'documenttexthd.ico',
+include_files = ['README.txt',
+                 'MainForm.py',
+                 'Postprocessing.py',
+                 'TextIO.py',
+                 'AddSubjectAreaForm.py',
+                 'AddToDictionaryForm.py',
+                 'AlgorithmsEstimationForm.py',
+                 'DefinitionCharacteristics.py',
+                 'PreliminaryProcessing.py',
+                 'TermDictionary.py',
+                 'Text_dis_alg.json',
+                 'udk_504117.json',
                  ]
 
 options = {
     'build_exe': {
         'zip_include_packages': zip_include_packages,
-        'build_exe': 'build_windows',
+        'build_exe': 'Extracting_keywords',
         'include_files': include_files,
     }
 }

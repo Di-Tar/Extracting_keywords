@@ -3,7 +3,7 @@ import sys
 from PyQt5.QtWidgets import QApplication
 
 
-from GUI.MainForm import MainForm
+from MainForm import MainForm
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
