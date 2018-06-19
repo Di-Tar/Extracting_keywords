@@ -94,7 +94,10 @@ class PreliminaryProcessing:
                         if self.t_text[sentence][part_sentence][words][1] == 'LATN':
                             self.t_nsw_text.append(self.t_text[sentence][part_sentence][words])
                     except ValueError:
-                        if self.t_text[sentence][part_sentence][words][1] in ['NOUN', 'ADJF', 'ADVB', 'INFN']:
+                        if self.t_text[sentence][part_sentence][words][1] in ['NOUN', 'INFN']:
+                            self.t_nsw_text.append(self.t_text[sentence][part_sentence][words])
+                        elif self.t_text[sentence][part_sentence][words][1] in ['ADJF'] and \
+                                len(self.t_text[sentence][part_sentence][words][0]) > 3:
                             self.t_nsw_text.append(self.t_text[sentence][part_sentence][words])
 
         dict_Cand = {}
